@@ -2,6 +2,7 @@ package com.shourov.validation_example.controller;
 
 import com.shourov.validation_example.dto.UserRequest;
 import com.shourov.validation_example.entity.User;
+import com.shourov.validation_example.exception.UserNotFoundException;
 import com.shourov.validation_example.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
+    public ResponseEntity<User> getUserById(@PathVariable int id) throws UserNotFoundException {
         return ResponseEntity.ok(service.getUserById(id));
     }
 

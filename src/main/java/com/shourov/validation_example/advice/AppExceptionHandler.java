@@ -1,5 +1,6 @@
 package com.shourov.validation_example.advice;
 
+import com.shourov.validation_example.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,5 +21,13 @@ public class AppExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage());
         });
         return errors;
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(UserNotFoundException.class)
+    public Map<String, String> handleNonExistentUser(UserNotFoundException e) {
+        Map<String, String> error = new HashMap<>();
+        error.put("message", e.getMessage());
+        return error;
     }
 }

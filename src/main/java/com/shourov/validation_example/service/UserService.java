@@ -2,6 +2,7 @@ package com.shourov.validation_example.service;
 
 import com.shourov.validation_example.dto.UserRequest;
 import com.shourov.validation_example.entity.User;
+import com.shourov.validation_example.exception.UserNotFoundException;
 import com.shourov.validation_example.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,13 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User getUserById(int id) {
-        return repository.findByUserId(id);
+    public User getUserById(int id) throws UserNotFoundException {
+
+        User user = repository.findByUserId(id);
+        if(user != null) {
+            return user;
+        } else {
+            throw new UserNotFoundException("User not found with id: " + id);
+        }
     }
 }

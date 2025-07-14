@@ -3,6 +3,7 @@ package com.shourov.validation_example.controller;
 import com.shourov.validation_example.dto.UserRequest;
 import com.shourov.validation_example.entity.User;
 import com.shourov.validation_example.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UserController {
     private final UserService service;
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody UserRequest request) {
+    public ResponseEntity<User> addUser(@RequestBody @Valid UserRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.addUser(request));
     }
 
